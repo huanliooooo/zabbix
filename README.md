@@ -275,14 +275,6 @@ service zabbix-agent restart
 
 ## MySQL template mytemplate-mysql-trap.xml
 
-In a script `mysql_stat.sh` in a substring
-
-```
-... --user=`mysql_user` --password=`mysql_password` ...
-```
-
-set its values ​​'mysql_user' and 'mysql_password'.
-
 Script sending MySQL server statistics to Zabbix server
 
 ```
@@ -299,11 +291,25 @@ mysql> FLUSH PRIVILEGES;
 mysql> \q
 ```
 
-/etc/zabbix/zabbix_agentd.conf - connecting the script to the zabbix agent
+Copy `mysql.conf`:
+
+```
+cp /Config/mysql.conf /etc/zabbix/zabbix_agentd.conf.d/
+```
+
+/etc/zabbix/zabbix_agentd.conf.d/mysql.conf - connecting the script to the zabbix agent
 
 ```
 UserParameter		= mysql_status,/etc/zabbix/mysql_stat.sh
 ```
+
+In a script `mysql_stat.sh` in a substring
+
+```
+... --user=`mysql_user` --password=`mysql_password` ...
+```
+
+Set its values ​​'mysql_user' and 'mysql_password'.
 
 Agent restart
 
