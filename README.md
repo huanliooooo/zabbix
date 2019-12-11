@@ -276,6 +276,7 @@ service zabbix-agent restart
 ## MySQL template mytemplate-mysql-trap.xml
 
 Script sending MySQL server statistics to Zabbix server
+Copy ~/Scripts/mysql_stat.sh to /etc/zabbix folder
 
 ```
 chmod 750 /etc/zabbix/mysql_stat.sh
@@ -291,11 +292,7 @@ mysql> FLUSH PRIVILEGES;
 mysql> \q
 ```
 
-Copy `mysql.conf`:
-
-```
-cp /Config/mysql.conf /etc/zabbix/zabbix_agentd.conf.d/
-```
+Copy ~Config/mysql.conf to /etc/zabbix/zabbix_agentd.conf.d/
 
 /etc/zabbix/zabbix_agentd.conf.d/mysql.conf - connecting the script to the zabbix agent
 
