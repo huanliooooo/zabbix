@@ -7,10 +7,10 @@ cd $HOME_PATH
 echo $HOME_PATH
 source $FILE_CONF
 
-echo `date` $SERVER $HOST_NAME
+echo `date` $SERVER $HOST_NAME $MYSQL_USER $MYSQL_PASSWORD
 chmod +x $FILE_EXECUTE
-croncmd1="$HOME_PATH/$FILE_EXECUTE $SERVER $HOST_NAME $HOME_PATH 1"
-croncmd2="$HOME_PATH/$FILE_EXECUTE $SERVER $HOST_NAME $HOME_PATH 2"
+croncmd1="$HOME_PATH/$FILE_EXECUTE $MYSQL_USER $MYSQL_PASSWORD $SERVER $HOST_NAME 1"
+croncmd2="$HOME_PATH/$FILE_EXECUTE $MYSQL_USER $MYSQL_PASSWORD $SERVER $HOST_NAME 2"
 cronjobFirst="* * * * * $croncmd1"
 cronjobSecond="* * * * * sleep 30; $croncmd2"
 ( crontab -l | grep -v -F "$croncmd1" ; echo "$cronjobFirst" ) | crontab -
