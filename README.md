@@ -82,6 +82,42 @@ Installation Order:
 
 For processing JSON data in monitoring Elasticsearch, MongoDB and RabbitMQ, the corrected JSON.sh ( http://github.com/dominictarr/JSON.sh ) is used.
 
+## MySQL template mytemplate-mysql-trap.xml
+
+Required
+
+- cron (INSTALL: apt-get install cron, START: service cron start, STOP: service cron stop)
+
+Edit ~/Scripts/mysql/mysql_zabbix.conf:
+
+```
+SERVER=   // zabbix server (ip or domain)
+HOST_NAME= // zabbix host name
+MYSQL_USER=
+MYSQL_PASSWORD=
+```
+
+Set rights of file:
+
+```
+chmod 750 ~/Scripts/mysql/mysql_stat.sh
+chmod 750 ~/Scripts/mysql/cronjob.sh
+```
+
+Test:
+
+```
+./mysql_stat.sh $MYSQL_USER $MYSQL_PASSWORD $SERVER $HOST_NAME
+```
+
+Result: 0 - fail , 1 - success
+
+Crontab (30 seconds)
+
+```
+./cronjob.sh
+```
+
 ## Apache template mytemplate-apache-trap.xml
 
 It is assumed that Apache works for nginx.
@@ -268,47 +304,6 @@ UserParameter		= mongodb.discovery_db,/etc/zabbix/mongodb_stat.sh db
 ```
 
 Перезапуск агента
-
-```
-service zabbix-agent restart
-```
-
-## MySQL template mytemplate-mysql-trap.xml
-
-Script sending MySQL server statistics to Zabbix server
-Copy ~/Scripts/mysql_stat.sh to /etc/zabbix folder
-
-```
-chmod 750 /etc/zabbix/mysql_stat.sh
-chgrp zabbix /etc/zabbix/mysql_stat.sh
-```
-
-Mysql user monitoring
-
-```
-mysql -p
-mysql> GRANT USAGE ON *.* TO 'mysql_user'@'localhost' IDENTIFIED BY 'mysql_password';
-mysql> FLUSH PRIVILEGES;
-mysql> \q
-```
-
-Copy ~Config/mysql.conf to /etc/zabbix/zabbix_agentd.conf.d/
-
-/etc/zabbix/zabbix_agentd.conf.d/mysql.conf - connecting the script to the zabbix agent
-
-```
-UserParameter		= mysql_status,/etc/zabbix/mysql_stat.sh
-```
-
-In a script `mysql_stat.sh` in a substring
-
-```
-... --user=`mysql_user` --password=`mysql_password` ...
-```
-
-Set its values ​​'mysql_user' and 'mysql_password'.
-
-Agent restart
 
 ```
 service zabbix-agent restart
