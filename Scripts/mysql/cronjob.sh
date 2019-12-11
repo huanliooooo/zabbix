@@ -1,7 +1,7 @@
 CDIR="`dirname "$0"`"
 HOME_PATH=`(cd "$CDIR"/ ; pwd)`
 FILE_EXECUTE=mysql_stat.sh
-FILE_CONF=zabbix.conf
+FILE_CONF=mysql_zabbix.conf
 
 cd $HOME_PATH
 echo $HOME_PATH
