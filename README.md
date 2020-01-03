@@ -88,6 +88,14 @@ Required
 
 - cron (INSTALL: apt-get install cron, START: service cron start, STOP: service cron stop)
 
+Mysql user monitoring
+```
+mysql -p
+mysql> GRANT USAGE ON *.* TO 'zabbix_monitor'@'localhost' IDENTIFIED BY 'password';
+mysql> FLUSH PRIVILEGES;
+mysql> \q
+````
+
 Edit ~/Scripts/mysql/mysql_zabbix.conf:
 
 ```
